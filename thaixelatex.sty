@@ -89,6 +89,16 @@
 \fi
 
 \RequirePackage{polyglossia}
+% work around a bug in polyglossia
+\makeatletter
+\ExplSyntaxOn
+\pretocmd\xpg@set@alias@values{%
+    \prop_if_exist:cF { xpg@alias@keyvals@#1@#4 }
+    { \prop_new:c {xpg@alias@keyvals@#1@#4} }
+}{}{}
+\ExplSyntaxOff
+\makeatother
+% end of workaround
 \ifenglish
   \setdefaultlanguage{english}
   \setotherlanguage{thai}
@@ -100,7 +110,7 @@
 
 %% spacing
 \RequirePackage{setspace}
-\let\@xfloat=\latex@xfloat % revert setspace patch of floating environments
+% \let\@xfloat=\latex@xfloat % revert setspace patch of floating environments
 \ifenglish
 \else
 \setstretch{1.35}
